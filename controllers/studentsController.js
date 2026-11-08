@@ -88,6 +88,50 @@ const countStudents = async (req, res, next) => {
     }
 }
 
+const updateStudents = async (req, res, next) => {
+    try {
+        const studentsAtualizado = await studentsService.updateStudents(
+            req.params.id,
+            req.body
+        )
+
+        res.status(200).json({
+            message: "Estudante encontrado",
+            data: studentsAtualizado
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+const updateStudentsAvailability = async (req, res, next) => {
+    try {
+        const { ativo } = req.body
+        const updatedStudent = await studentsService.updateStudentsAvailability(req.params.id, req.body)
+
+        res.status(200).json({
+            message: "Estudante atualizado com sucesso",
+            data: updatedStudent
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+const deleteStudents = async (req, res, next) => {
+    try {
+        const students = await studentsService.deleteStudents(req.params.id)
+
+        res.status(200).json({
+            message: "Estudante deletado com sucesso",
+            data: students
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 
 export default {
     createStudents,
@@ -96,4 +140,7 @@ export default {
     getStudentsActive,
     searchStudentsByName,
     countStudents,
+    updateStudents,
+    updateStudentsAvailability,
+    deleteStudents
 }

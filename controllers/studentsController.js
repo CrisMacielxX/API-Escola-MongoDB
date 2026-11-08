@@ -11,6 +11,7 @@ const createStudents = async (req, res, next) => {
 
     } catch (error) {
         next(error)
+        next(error)
     }
 }
 
@@ -69,7 +70,21 @@ const searchStudentsByName = async (req, res, next) => {
         })
 
     } catch (error) {
-        next (error)
+        next(error)
+    }
+}
+
+const countStudents = async (req, res, next) => {
+    try {
+        const total = await studentsService.countStudent()
+
+        res.status(200).json({
+            message: "Quantidade de estudantes encontrados",
+            total
+        })
+
+    } catch (error) {
+        next(error)
     }
 }
 
@@ -80,4 +95,5 @@ export default {
     getStudentsById,
     getStudentsActive,
     searchStudentsByName,
+    countStudents,
 }

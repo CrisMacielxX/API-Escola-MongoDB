@@ -65,10 +65,15 @@ const searchStudentsByName = async (name) => {
     return students
 }
 
+const countStudent = async () => {
+    return Students.countDocuments()
+
+}
 export default {
     createStudents,
     getStudents,
     getStudentsById,
     getStudentsActive,
     searchStudentsByName,
+    countStudent,
 }

@@ -51,8 +51,78 @@ const getStudentsById = async (id) => {
     return students
 }
 
+const getStudentsActive = async () => {
+    return Students.find({
+        ativo: true,
+    })
+}
+
+const searchStudentsByName = async (name) => {
+    const students = await Students.find({
+        nome: { $regex: name, $options: "i" }
+    })
+
+    return students
+}
+
+const countStudent = async () => {
+    return Students.countDocuments()
+
+}
+
+const updateStudents = async (id, data) => {
+    const students = await Students.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true
+    })
+
+    if (!students) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return students
+}
+
+const updateStudentsAvailability = async (id, ativo) => {
+    const updateStudents = await Students.findByIdAndUpdate(
+        id,
+        { ativo : ativo },
+        { new: true, runValidators: true}
+    )
+
+    if(!updateStudents) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return updateStudents
+}
+
+
+const deleteStudents = async (id) => {
+    const students = await Students.findByIdAndDelete(id)
+
+    if (!students) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return students
+}
+
+
 export default {
     createStudents,
     getStudents,
     getStudentsById,
+    getStudentsActive,
+    searchStudentsByName,
+    countStudent,
+    updateStudents,
+    updateStudentsAvailability,
+    deleteStudents
 }

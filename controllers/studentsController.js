@@ -20,7 +20,7 @@ const getStudents = async (req, res, next) => {
         const students = await studentsService.getStudents()
 
         res.status(200).json({
-            message: "Estudantes encontrado com sucesso",
+            message: "Estudantes encontrados com sucesso",
             total: students.lenght,
             data: students
         })

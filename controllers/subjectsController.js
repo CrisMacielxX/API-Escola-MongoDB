@@ -15,6 +15,36 @@ const createSubjects = async (req, res, next) => {
     }
 }
 
+const getAllSubjects = async (req, res, next) => {
+    try {
+        const subjects = await subjectsService.getAllSubjects()
+
+        res.status(200).json({
+            message: "Diciplinas encontradas com sucesso",
+            data: subjects
+        })
+
+    } catch (error) {
+        next (error)
+    }
+}
+
+const getSubjectsById = async (req, res, next) => {
+    try {
+        const subjects = await subjectsService.getSubjectsById(req.params.id)
+
+        res.status(200).json({
+            message: "Diciplina encontrada com sucesso",
+            data: subjects
+        })
+
+    } catch (error) {
+        next (error)
+    }
+}
+
 export default {
     createSubjects,
+    getAllSubjects,
+    getSubjectsById,
 }

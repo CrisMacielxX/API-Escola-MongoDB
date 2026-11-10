@@ -62,8 +62,15 @@ const searchStudentsByName = async (name) => {
         nome: { $regex: name, $options: "i" }
     })
 
+    if (!students) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+    
     return students
 }
+
 
 const countStudent = async () => {
     return Students.countDocuments()
@@ -88,11 +95,11 @@ const updateStudents = async (id, data) => {
 const updateStudentsAvailability = async (id, ativo) => {
     const updateStudents = await Students.findByIdAndUpdate(
         id,
-        { ativo : ativo },
-        { new: true, runValidators: true}
+        { ativo: ativo },
+        { new: true, runValidators: true }
     )
 
-    if(!updateStudents) {
+    if (!updateStudents) {
         const error = new Error("Estudante não encontrado")
         error.statusCode = 404
         throw error

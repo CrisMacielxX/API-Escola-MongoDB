@@ -33,4 +33,4 @@ const SubjectsSchema = new mongoose.Schema(
     }
 )
 
-export default mongoose.model("subjects", SubjectsSchema)
+export default mongoose.model("Subjects", SubjectsSchema)

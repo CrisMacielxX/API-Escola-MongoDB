@@ -65,10 +65,9 @@ const searchStudentsByName = async (req, res, next) => {
 
         res.status(200).json({
             message: "Estudantes encontrados",
-            total: students.lenght,
+            total: students.length,
             data: students
         })
-
     } catch (error) {
         next(error)
     }
@@ -107,8 +106,11 @@ const updateStudents = async (req, res, next) => {
 
 const updateStudentsAvailability = async (req, res, next) => {
     try {
-        const { ativo } = req.body
-        const updatedStudent = await studentsService.updateStudentsAvailability(req.params.id, req.body)
+        const ativo = req.body.ativo
+        const updatedStudent = await studentsService.updateStudentsAvailability(
+            req.params.id,
+            ativo
+        )
 
         res.status(200).json({
             message: "Estudante atualizado com sucesso",
@@ -132,6 +134,7 @@ const deleteStudents = async (req, res, next) => {
         next(error)
     }
 }
+
 
 export default {
     createStudents,

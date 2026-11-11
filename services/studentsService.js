@@ -62,8 +62,15 @@ const searchStudentsByName = async (name) => {
         nome: { $regex: name, $options: "i" }
     })
 
+    if (!students || students.length === 0) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
     return students
 }
+
 
 const countStudent = async () => {
     return Students.countDocuments()
@@ -85,10 +92,10 @@ const updateStudents = async (id, data) => {
     return students
 }
 
-const updateStudentsAvailability = async (id, data) => {
+const updateStudentsAvailability = async (id, ativo) => {
     const updateStudents = await Students.findByIdAndUpdate(
         id,
-        { ativo : data.ativo },
+        { ativo: ativo },
         { new: true, runValidators: true }
     )
 
@@ -100,6 +107,7 @@ const updateStudentsAvailability = async (id, data) => {
 
     return updateStudents
 }
+
 
 const deleteStudents = async (id) => {
     const students = await Students.findByIdAndDelete(id)

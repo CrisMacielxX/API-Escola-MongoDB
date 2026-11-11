@@ -57,9 +57,25 @@ const getSubjectsByTeacher = async (req, res, next) => {
     }
 }
 
+const getSubjectsActive = async (req, res, next) => {
+    try {
+        const subjects = await subjectsService.getSubjectsActive()
+
+        res.status(200).json({
+            message: "Diciplinas disponiveis encontrado",
+            total: subjects.length,
+            data: subjects
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 export default {
     createSubjects,
     getAllSubjects,
     getSubjectsById,
     getSubjectsByTeacher,
+    getSubjectsActive,
 }

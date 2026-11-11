@@ -61,9 +61,17 @@ const getSubjectsByTeacher = async (idTeacher) => {
 
 }
 
+const getSubjectsActive = async () => {
+    return Subjects.find({
+        ativa: true,
+    })
+}
+
+
 export default {
     createSubjects,
     getAllSubjects,
     getSubjectsById,
     getSubjectsByTeacher,
+    getSubjectsActive,
 }

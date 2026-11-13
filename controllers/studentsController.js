@@ -95,7 +95,7 @@ const updateStudents = async (req, res, next) => {
         )
 
         res.status(200).json({
-            message: "Estudante encontrado",
+            message: "Estudante atualizado",
             data: studentsAtualizado
         })
 
@@ -109,7 +109,7 @@ const updateStudentsAvailability = async (req, res, next) => {
         const ativo = req.body.ativo
         const updatedStudent = await studentsService.updateStudentsAvailability(
             req.params.id,
-            ativo
+            req.body.ativo
         )
 
         res.status(200).json({

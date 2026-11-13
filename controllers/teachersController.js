@@ -95,7 +95,7 @@ const updateTeacher = async (req, res, next) => {
         )
         
         res.status(200).json({
-            message: "Professor encontrado",
+            message: "Professor atualizado",
             data: teacherAtualizado
         })
 

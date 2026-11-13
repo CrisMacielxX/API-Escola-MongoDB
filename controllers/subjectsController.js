@@ -72,10 +72,77 @@ const getSubjectsActive = async (req, res, next) => {
     }
 }
 
+const getSubjectHours = async (req, res, next) => {
+    try {
+        const hours = await subjectsService.getSubjectHours(req.params.min, req.params.max)
+
+        res.status(200).json({
+            message: "Diciplinas encontradas",
+            data: hours
+            
+        })
+
+    } catch (error) {
+        next (error)
+    }
+}
+
+const updateSubjects = async (req, res, next) => {
+        try {
+        const diciplinaAtualizada = await subjectsService.updateSubjects(
+            req.params.id,
+            req.body
+        )
+
+        res.status(200).json({
+            message: "Diciplina atualizada",
+            data: diciplinaAtualizada
+        })
+
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+const updateSubjectsAvailability = async (req, res, next) => {
+    try {
+        const updateSubjects = await subjectsService.updateSubjectsAvailability(
+            req.params.id,
+            req.body.ativa
+        );
+
+        res.status(200).json({
+            message: "Disciplina atualizada com sucesso",
+            data: updateSubjects
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteSubjects = async (req, res, next) => {
+    try {
+        const subjects = await subjectsService.deleteSubjects(req.params.id)
+
+        res.status(200).json ({
+            message: "Diciplina deletada com sucesso",
+            data: subjects
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export default {
     createSubjects,
     getAllSubjects,
     getSubjectsById,
     getSubjectsByTeacher,
     getSubjectsActive,
+    getSubjectHours,
+    updateSubjects,
+    updateSubjectsAvailability,
+    deleteSubjects
 }

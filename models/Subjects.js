@@ -21,6 +21,11 @@ const SubjectsSchema = new mongoose.Schema(
             required: true
         },
 
+        cargaHoraria: {
+            type: Number,
+            required: true
+
+        },
 
         ativa: {
             type: Boolean,

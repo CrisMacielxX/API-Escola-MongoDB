@@ -39,13 +39,13 @@ const createSubjects = async (data) => {
 
 const getAllSubjects = async () => {
     return Subjects.find()
-    .populate("teacherId")
+        .populate("teacherId")
 }
 
 const getSubjectsById = async (id) => {
     const subjects = await Subjects.findById(id)
 
-    if(!subjects) {
+    if (!subjects) {
         const error = new Error("Diciplina não encontrada")
         error.statusCode = 404
         throw error
@@ -67,6 +67,57 @@ const getSubjectsActive = async () => {
     })
 }
 
+const getSubjectHours = async (min, max) => {
+    return await Subjects.find({
+        cargaHoraria: { $gte: Number(min), $lte: Number(max) }
+    })
+}
+
+const updateSubjects = async (id, data) => {
+    const subjects = await Subjects.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true
+    })
+
+    if (!subjects) {
+        const error = new Error("Diciplina não encontrada para atualização")
+        error.statusCode = 404
+        throw error
+    }
+
+    return subjects
+
+}
+
+const updateSubjectsAvailability = async (id, ativa) => {
+    const updateSubjects = await Subjects.findByIdAndUpdate(
+        id,
+        { ativa: ativa },
+        { new: true, runValidators: true }
+    );
+
+    if (!updateSubjects) {
+        const error = new Error("Disciplina não encontrada");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return updateSubjects;
+};
+
+const deleteSubjects = async (id) => {
+    //
+    /*
+    const matriculasExistentes = await Enrollment.findOne({ subjectId: id });
+    if (matriculasExistentes) {
+        const error = new Error("Não é possível excluir disciplinas que possuem matrículas cadastradas.");
+        error.statusCode = 400;
+        throw error;
+    }
+    */
+
+    return await Subjects.findByIdAndDelete(id);
+};
 
 export default {
     createSubjects,
@@ -74,4 +125,8 @@ export default {
     getSubjectsById,
     getSubjectsByTeacher,
     getSubjectsActive,
+    getSubjectHours,
+    updateSubjects,
+    updateSubjectsAvailability,
+    deleteSubjects
 }

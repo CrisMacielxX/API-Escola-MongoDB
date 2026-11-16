@@ -18,7 +18,6 @@ app.use("/enrollments", enrollmentsRoutes)
 app.use("/students", studentsRoutes)
 app.use("/subjects", subjectsRoutes)
 app.use("/teachers", teacherRoutes)
-app.use("teachers", teacherRoutes)
 
 const startServer = async () => {
     try {

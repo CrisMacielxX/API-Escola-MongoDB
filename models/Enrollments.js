@@ -8,7 +8,7 @@ const EnrollmentsSchema = new mongoose.Schema(
             required: true
         },
 
-        subjects: {
+        subjectsId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Subjects",
             required: true
@@ -27,13 +27,12 @@ const EnrollmentsSchema = new mongoose.Schema(
 
         notaFinal: {
             type: Number,
-            trim: true,
-            required: true
+            default: null
         }
     },
     {
         timestamps: true,
-        collation: "enrollments"
+        collection: "enrollments"
 
     }
 )

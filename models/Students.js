@@ -35,7 +35,7 @@ const StudentsSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        collation: "students"
+        collection: "students"
     }
 )
 

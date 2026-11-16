@@ -34,7 +34,7 @@ const TeacherSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
-        collation: "teachers"
+        collection: "teachers"
     }
 )
 

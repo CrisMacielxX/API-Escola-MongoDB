@@ -62,12 +62,12 @@ const searchStudentsByName = async (name) => {
         nome: { $regex: name, $options: "i" }
     })
 
-    if (!students) {
+    if (!students || students.length === 0) {
         const error = new Error("Estudante não encontrado")
         error.statusCode = 404
         throw error
     }
-    
+
     return students
 }
 

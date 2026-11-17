@@ -31,8 +31,8 @@ const createEnrollments = async (data) => {
 
 const getAllEnrollments = async () => {
     return Enrollments.find()
-        .populate("teacherId")
-        .populate("studentId")
+        .populate("subjectsId")
+        .populate("studentsId")
 }
 
 const getEnrollmentsById = async (id) => {

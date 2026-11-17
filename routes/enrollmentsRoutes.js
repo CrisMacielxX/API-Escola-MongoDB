@@ -4,7 +4,7 @@ import enrollmentsController from "../controllers/enrollmentsController.js";
 const router = express.Router();
 
 router.post("/", enrollmentsController.createEnrollments)
-router.get("/", enrollmentsController.getAllEnrollments)
+router.get("/enrollments/active", enrollmentsController.getAllEnrollments)
 router.get("/:id", enrollmentsController.getEnrollmentsById)
 router.get("/students/:id", enrollmentsController.getStudentsEnrollments)
 router.get("/subjects/:id", enrollmentsController.getSubjectEnrollments)

@@ -59,8 +59,9 @@ const getTeacherActive = async () => {
 }
 
 const getTeacherSpecialty = async (especialidade) => {
-    const teacher = await Teacher.find({especialidade})
-
+    const teacher = await Teacher.find({
+        especialidade: { $regex: especialidade, $options: "i" }
+    })
     if (!teacher) {
         const error = new Error("Professor não encontrado")
         error.statusCode = 404

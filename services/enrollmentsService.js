@@ -54,13 +54,13 @@ const getStudentsEnrollments = async (idStudents) => {
 
 const getSubjectEnrollments = async (idSubjects) => {
     const enrollments = await Enrollments.find({ subjectsId: idSubjects })
-    .populate("studentsId")
+        .populate("studentsId")
 
     return enrollments
 }
 
 const getEnrollmentsActive = async (status) => {
-    return Enrollments.find({status: status})
+    return Enrollments.find({ status: status })
 }
 
 
@@ -68,6 +68,50 @@ const countEnrollments = async () => {
     return Enrollments.countDocuments()
 }
 
+const updateEnrollmentsNote = async (id, notaFinal) => {
+    const updateNote = await Enrollments.findByIdAndUpdate(
+        id,
+        { notaFinal: notaFinal },
+        { new: true, runValidators: true }
+    )
+
+    if (!updateNote) {
+        const error = new Error("Matricula não encontrada")
+        error.statusCode = 404
+        throw error
+    }
+
+    return updateNote
+}
+
+
+const updateEnrollmentsStatus = async (id, status) => {
+    const updateStatus = await Enrollments.findByIdAndUpdate(
+        id,
+        { status: status },
+        { new: true, runValidators: true }
+    );
+
+    if (!updateStatus) {
+        const error = new Error("Matricula não encontrada");
+        error.statusCode = 404;
+        throw error;
+    }
+
+    return updateStatus;
+};
+
+const deleteEnrollments = async (id) => {
+    const enrollments = await Enrollments.findByIdAndDelete(id)
+
+    if (!enrollments) {
+        const error = new Error("Matricula não encontrada")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollments
+}
 
 
 export default {
@@ -78,4 +122,7 @@ export default {
     getSubjectEnrollments,
     getEnrollmentsActive,
     countEnrollments,
+    updateEnrollmentsNote,
+    updateEnrollmentsStatus,
+    deleteEnrollments,
 };

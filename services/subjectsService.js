@@ -107,15 +107,13 @@ const updateSubjectsAvailability = async (id, ativa) => {
 };
 
 const deleteSubjects = async (id) => {
-    //
-    /*
+
     const matriculasExistentes = await Enrollment.findOne({ subjectId: id });
     if (matriculasExistentes) {
         const error = new Error("Não é possível excluir disciplinas que possuem matrículas cadastradas.");
         error.statusCode = 400;
         throw error;
     }
-    */
 
     return await Subjects.findByIdAndDelete(id);
 };

@@ -13,5 +13,6 @@ router.get("/count/enrollments", enrollmentsController.countEnrollments)
 router.patch("/:id/note", enrollmentsController.updateEnrollmentsNote)
 router.patch("/:id/status", enrollmentsController.updateEnrollmentsStatus)
 router.delete("/:id", enrollmentsController.deleteEnrollments)
+router.get("/students/history/:id", enrollmentsController.getHistoryStudents)
 
 export default router;

@@ -34,7 +34,7 @@ const getEnrollmentsById = async (req, res, next) => {
         const enrollments = await enrollmentService.getEnrollmentsById(req.params.id)
 
         res.status(200).json({
-            message: "matriculas encontradas com sucesso",
+            message: "Matriculas encontradas com sucesso",
             data: enrollments
         })
 
@@ -146,6 +146,19 @@ const deleteEnrollments = async (req, res, next) => {
     }
 }
 
+const getHistoryStudents = async (req, res, next) => {
+    try {
+        const enrollments = await enrollmentService.getEnrollmentsById(req.params.id)
+
+        res.status(200).json({
+            message: "Matriculas encontradas com sucesso",
+            data: enrollments
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 export default {
     createEnrollments,
@@ -158,4 +171,5 @@ export default {
     updateEnrollmentsNote,
     updateEnrollmentsStatus,
     deleteEnrollments,
+    getHistoryStudents,
 };

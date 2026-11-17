@@ -12,7 +12,7 @@ const createSubjects = async (data) => {
         throw error
     }
 
-    const teacher = await Teacher.findById(teacherId)
+    const teacher = await Teachers.findById(teacherId)
 
     if (!teacher) {
         const error = new Error("Id do professor invalido")

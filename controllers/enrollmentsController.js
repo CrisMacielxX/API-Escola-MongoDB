@@ -2,13 +2,9 @@ import enrollmentService from "../services/enrollmentsService.js";
 
 const createEnrollments = async (req, res, next) => {
     try {
-        const { studentId, subjectId, notaFinal } = req.body;
-
-        const enrollment = await enrollmentService.createEnrollments({
-            studentsId: studentId,
-            subjectsId: subjectId,
-            notaFinal
-        });
+        const enrollment = await enrollmentService.createEnrollments(
+            req.body
+        );
 
         res.status(201).json({
             message: "Matrícula realizada com sucesso",

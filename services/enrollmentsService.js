@@ -6,6 +6,7 @@ const createEnrollments = async (data) => {
     const { studentsId, subjectsId, notaFinal } = data;
 
     const student = await Students.findById(studentsId);
+    
     if (!student) {
         const error = new Error("Aluno não encontrado.");
         error.statusCode = 404;

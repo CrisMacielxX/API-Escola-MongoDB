@@ -114,19 +114,6 @@ const deleteEnrollments = async (id) => {
     return enrollments
 }
 
-const getHistoryStudents = async (id) => {
-    const enrollments = await Enrollments.findById(id)
-
-    if (!enrollments) {
-        const error = new Error("Matricula não encontrada")
-        error.statusCode = 404
-        throw error
-    }
-
-    return enrollments
-}
-
-
 export default {
     createEnrollments,
     getAllEnrollments,
@@ -138,5 +125,4 @@ export default {
     updateEnrollmentsNote,
     updateEnrollmentsStatus,
     deleteEnrollments,
-    getHistoryStudents,
 };

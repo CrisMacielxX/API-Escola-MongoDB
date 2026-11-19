@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const StudentsSchema = new mongoose.Schema(
     {
@@ -31,7 +31,7 @@ const StudentsSchema = new mongoose.Schema(
         ativo: {
             type: Boolean,
             default: true
-        }
+        },
     },
     {
         timestamps: true,

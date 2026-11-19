@@ -1,11 +1,13 @@
 import express from "express"
 import dotenv from "dotenv"
-
 import connectDB from "./config/db.js"
+
 import enrollmentsRoutes from "./routes/enrollmentsRoutes.js"
 import studentsRoutes from "./routes/studentsRoutes.js"
 import subjectsRoutes from "./routes/subjectsRoutes.js"
 import teacherRoutes from "./routes/teacherRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 dotenv.config()
 
@@ -18,6 +20,8 @@ app.use("/enrollments", enrollmentsRoutes)
 app.use("/students", studentsRoutes)
 app.use("/subjects", subjectsRoutes)
 app.use("/teachers", teacherRoutes)
+app.use("/auth", authRoutes)
+app.use("/user", userRoutes)
 
 const startServer = async () => {
     try {

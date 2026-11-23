@@ -1,16 +1,18 @@
 import express from "express"
+import authMiddleware from "../middlewares/authMiddleware.js"
+import adminMiddleware from "../middlewares/adminMiddleware.js"
 import studentsController from "../controllers/studentsController.js"
 
 const router = express.Router()
 
-router.post("/", studentsController.createStudents)
-router.get("/", studentsController.getStudents)
-router.get("/:id", studentsController.getStudentsById)
-router.get("/active/students", studentsController.getStudentsActive)
-router.get("/search/:name", studentsController.searchStudentsByName)
-router.get("/count/students", studentsController.countStudents)
-router.put("/:id", studentsController.updateStudents)
-router.patch("/:id", studentsController.updateStudentsAvailability)
-router.delete("/:id", studentsController.deleteStudents)
+router.post("/", authMiddleware, studentsController.createStudents)
+router.get("/", authMiddleware, studentsController.getStudents)
+router.get("/:id", authMiddleware, studentsController.getStudentsById)
+router.get("/active/students", authMiddleware, adminMiddleware, studentsController.getStudentsActive)
+router.get("/search/:name", authMiddleware, adminMiddleware, studentsController.searchStudentsByName)
+router.get("/count/students", authMiddleware, adminMiddleware, studentsController.countStudents)
+router.put("/:id", authMiddleware, adminMiddleware, studentsController.updateStudents)
+router.patch("/:id", authMiddleware, adminMiddleware, studentsController.updateStudentsAvailability)
+router.delete("/:id", authMiddleware, adminMiddleware, studentsController.deleteStudents)
 
 export default router

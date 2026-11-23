@@ -2,48 +2,58 @@ import teachersController from "../controllers/teachersController.js"
 import Teacher from "../models/Teachers.js"
 
 const createTeacher = async (data) => {
-    const { nome, email, especialidade, telefone } = data
+    const { nome, email, password, especialidade, telefone } = data
 
-    if (!nome || !email) {
-        const error = new Error("Nome e email são obrigatorios")
+    if (!nome || !email || !password) {
+        const error = new Error("Nome, email e senha são obrigatorios")
         error.statusCode = 400
         throw error
     }
 
-    const teacherExist = await Teacher.findOne({ email })
+    const userExist = await User.findOne({ email })
 
-    if (teacherExist) {
-        const error = new Error("email já utilizado")
+    if (userExist) {
+        const error = new Error("O email já foi utilizado")
         error.statusCode = 400
         throw error
     }
 
-    const teacher = await Teacher.create({
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const user = await User.create({
         nome,
         email,
-        especialidade,
-        telefone
+        password: hashedPassword,
+        telefone,
+        role: "teacher",
+        ativo: true
     })
 
-    return {
-        _id: teacher._id,
-        nome: teacher.nome,
-        email: teacher.email,
-        especialidade: teacher.especialidade,
-        telefone: teacher.telefone,
-        createAt: teacher.createdAt,
-        updateAt: teacher.updatedAt
+    try {
+        const teacher = await Teacher.create({
+            userId: user._id,
+            especialidade,
+            ativo: true
+        })
+
+        return Teacher.findById(teacher._id)
+            .populate("userId", "nome email telefone role")
+    } catch (error) {
+        await User.findByIdAndDelete(user._id)
+        throw error
     }
 }
 
 const getTeacher = async () => {
     return Teacher.find()
+        .populate("userId", "nome email")
 }
 
 const getTeacherById = async (id) => {
     const teacher = await Teacher.findById(id)
+        .populate("userId", "nome email")
 
-    if(!teacher) {
+    if (!teacher) {
         const error = new Error("Professor não encontrado")
         error.statusCode = 404
         throw error
@@ -56,12 +66,14 @@ const getTeacherActive = async () => {
     return Teacher.find({
         ativo: true
     })
+        .populate("userId", "nome email")
 }
 
 const getTeacherSpecialty = async (especialidade) => {
     const teacher = await Teacher.find({
         especialidade: { $regex: especialidade, $options: "i" }
     })
+        .populate("userId", "nome email")
     if (!teacher) {
         const error = new Error("Professor não encontrado")
         error.statusCode = 404
@@ -80,24 +92,25 @@ const updateTeacher = async (id, data) => {
         new: true,
         runValidators: true
     })
+        .populate("userId", "nome email")
 
-    if(!teacher) {
+    if (!teacher) {
         const error = new Error("Professor não encontrado")
         error.statusCode = 404
         throw error
     }
 
     return teacher
-} 
+}
 
 const updateTeacherAvailability = async (id, ativo) => {
     const updateTeacher = await Teacher.findByIdAndUpdate(
         id,
-        { ativo : ativo },
-        { new: true, runValidators: true}
+        { ativo: ativo },
+        { new: true, runValidators: true }
     )
 
-    if(!updateTeacher) {
+    if (!updateTeacher) {
         const error = new Error("Professor não encontrado")
         error.statusCode = 404
         throw error

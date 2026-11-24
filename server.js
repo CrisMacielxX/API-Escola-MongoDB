@@ -16,7 +16,7 @@ const app = express()
 const PORT = 1998
 
 app.use(cors({
-    origin: process.env.FRONTED_URL || "http://localhost:5173"
+    origin: process.env.FRONTED_URL || "http://https://id-preview--534628a6-1395-4486-b272-8b0eecdfd240.lovable.app:5173"
 }))
 
 app.use(express.json())

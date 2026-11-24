@@ -15,24 +15,7 @@ dotenv.config()
 const app = express()
 const PORT = 1998
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "https://id-preview--534628a6-1395-4486-b272-8b0eecdfd240.lovable.app",
-  "http://localhost:5173",
-  "http://localhost:3000"
-].filter(Boolean)
-
-app.use(cors({
-  origin: (origin, callback) => {
-    // Permite requisições sem origin (Postman, healthchecks, etc.) ou na lista
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true)
-    }
-    return callback(new Error(`Origem não permitida pelo CORS: ${origin}`))
-  },
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}))
+app.use(cors())
 
 app.use(express.json())
 

@@ -1,7 +1,9 @@
 import Students from "../models/Students.js"
+import User from "../models/User.js"
+import bcrypt from "bcryptjs"
 
 const createStudents = async (data) => {
-    const { nome, email, idade, matricula, password } = data
+    const { nome, email, idade, matricula, password, telefone } = data
 
     if (!nome || !email || !password) {
         const error = new Error("Nome, password e email são obrigatorios")
@@ -35,7 +37,7 @@ const createStudents = async (data) => {
             ativo: true
         })
 
-        return Teacher.findById(teacher._id)
+        return Students.findById(student._id)
             .populate("userId", "nome email telefone role")
     } catch (error) {
         await User.findByIdAndDelete(user._id)

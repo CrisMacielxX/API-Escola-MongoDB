@@ -1,5 +1,8 @@
 import teachersController from "../controllers/teachersController.js"
 import Teacher from "../models/Teachers.js"
+import User from "../models/User.js"
+import bcrypt from "bcryptjs"
+
 
 const createTeacher = async (data) => {
     const { nome, email, password, especialidade, telefone } = data

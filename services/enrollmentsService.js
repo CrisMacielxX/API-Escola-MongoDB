@@ -3,7 +3,9 @@ import Students from "../models/Students.js";
 import Subjects from "../models/Subjects.js";
 
 const createEnrollments = async (data) => {
-    const { studentsId, subjectsId, notaFinal } = data;
+    const studentsId = data.studentsId || data.studentId;
+    const subjectsId = data.subjectsId || data.subjectId;
+    const { notaFinal, status } = data;
 
     const student = await Students.findById(studentsId);
 
@@ -23,11 +25,13 @@ const createEnrollments = async (data) => {
     const newEnrollment = await Enrollments.create({
         studentsId,
         subjectsId,
-        notaFinal
+        notaFinal,
+        status
     });
 
     return newEnrollment;
 };
+
 
 const getAllEnrollments = async () => {
     return Enrollments.find()
